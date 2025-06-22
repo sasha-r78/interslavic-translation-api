@@ -1,17 +1,22 @@
 # Interslavic Translation API
 
 An API for translating to and from interslavic.
+## Deployment and Usage
 
-## Features
+1.  **Install dependencies:**
+    This will install `wrangler` and other necessary packages.
+    ```bash
+    npm install
+    ```
 
--   Translate from dozens of languages to Interslavic.
--   Translate from Interslavic to other supported languages.
--   Fast and lightweight.
--   Ready to deploy on Cloudflare Workers.
+2.  **Run the dev server:**
+    This command uses `wrangler` to start a local server.
+    ```bash
+    npm start
+    ```
+    If everything goes right, the API should be accessible via `http://localhost:8787`.
 
-## API Usage
-
-The API is simple. You make a `GET` request, and it returns a JSON array of possible translations.
+Make a `GET` request, and it returns a JSON array of possible translations.
 
 ### Endpoints
 
@@ -19,16 +24,10 @@ The API is simple. You make a `GET` request, and it returns a JSON array of poss
     ```
     GET /<lang>/<word>
     ```
--   **Translate to a specific language:**
+-   **Translate to a specific language (optional extra parameter):**
     ```
     GET /<lang>/<word>/<target_lang>
     ```
-
-### Parameters
-
--   `<lang>`: The source language code (e.g., `en`, `ru`, `pl`).
--   `<word>`: The word to translate.
--   `<target_lang>` (optional): The target language code. Defaults to `isv` (Interslavic).
 
 ### Examples
 
@@ -41,21 +40,6 @@ The API is simple. You make a `GET` request, and it returns a JSON array of poss
     ```bash
     curl http://localhost:8787/isv/hej/ru
     ```
-
-### Response Format
-
-The API returns a JSON array of translation objects. Here is a simplified example of a single translation object:
-
-```json
-{
-  "id": "8364",
-  "isv": "privět",
-  "translate": "hello",
-  "original": "privět",
-  "details": "interj.",
-  "ipa": "prɪ'vʲet"
-}
-```
 
 ### Supported Languages
 
@@ -95,18 +79,6 @@ The API returns a JSON array of translation objects. Here is a simplified exampl
 
 To run this project locally, you'll need Node.js and npm installed.
 
-1.  **Install dependencies:**
-    This will install `wrangler` and other necessary packages.
-    ```bash
-    npm install
-    ```
-
-2.  **Run the local development server:**
-    This command uses `wrangler` to start a local server.
-    ```bash
-    npm start
-    ```
-    Your API will be running at `http://localhost:8787`.
 
 ## Deployment
 
