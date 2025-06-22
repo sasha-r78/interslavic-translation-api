@@ -1,5 +1,13 @@
 # Interslavic Translation API
 
+![Screenshot](screenshot.png)
+<style>
+img {
+  width: 100%;
+  height: auto;
+}
+</style>
+
 An API for translating to and from interslavic.
 ## Deployment and Usage
 
