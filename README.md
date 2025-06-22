@@ -1,55 +1,128 @@
-<h1>
-  <img src="src/components/Header/images/logo-icon.svg" alt="Logo" height="32" width="48">
-  Interslavic language dictionary
-</h1>
+# Interslavic Translation API
 
-[https://interslavic-dictionary.com](https://interslavic-dictionary.com)  
+An API for translating to and from interslavic.
 
-## Installation
-Recommended to use and install as PWA (Progressive Web App):
+## Features
 
-| <video width="341" src="https://github.com/user-attachments/assets/41363610-9e66-4912-83d9-f6c0b537f11b" title="iOS"></video> | <video width="360" src="https://github.com/user-attachments/assets/db4a56ff-0363-47c0-82db-ff9b2e0ca000" title="Android"></video> |
-|---|---|
+-   Translate from dozens of languages to Interslavic.
+-   Translate from Interslavic to other supported languages.
+-   Fast and lightweight.
+-   Ready to deploy on Cloudflare Workers.
+
+## API Usage
+
+The API is simple. You make a `GET` request, and it returns a JSON array of possible translations.
+
+### Endpoints
+
+-   **Translate to Interslavic (default):**
+    ```
+    GET /<lang>/<word>
+    ```
+-   **Translate to a specific language:**
+    ```
+    GET /<lang>/<word>/<target_lang>
+    ```
+
+### Parameters
+
+-   `<lang>`: The source language code (e.g., `en`, `ru`, `pl`).
+-   `<word>`: The word to translate.
+-   `<target_lang>` (optional): The target language code. Defaults to `isv` (Interslavic).
+
+### Examples
+
+-   **Translate "hello" from English to Interslavic:**
+    ```bash
+    curl http://localhost:8787/en/hello
+    ```
+
+-   **Translate "hej" from Interslavic to Russian:**
+    ```bash
+    curl http://localhost:8787/isv/hej/ru
+    ```
+
+### Response Format
+
+The API returns a JSON array of translation objects. Here is a simplified example of a single translation object:
+
+```json
+{
+  "id": "8364",
+  "isv": "privět",
+  "translate": "hello",
+  "original": "privět",
+  "details": "interj.",
+  "ipa": "prɪ'vʲet"
+}
+```
+
+### Supported Languages
+
+<details>
+<summary>Click to view all supported languages</summary>
+
+-   English (`en`)
+-   Russian (`ru`)
+-   Belarusian (`be`)
+-   Ukrainian (`uk`)
+-   Polish (`pl`)
+-   Czech (`cs`)
+-   Slovak (`sk`)
+-   Slovenian (`sl`)
+-   Croatian (`hr`)
+-   Serbian (`sr`)
+-   Macedonian (`mk`)
+-   Bulgarian (`bg`)
+-   German (`de`)
+-   Dutch (`nl`)
+-   Esperanto (`eo`)
+-   Old Church Slavonic (`cu`)
+-   Kashubian (`csb`)
+-   Lower Sorbian (`dsb`)
+-   Upper Sorbian (`hsb`)
+-   Interlingua (`ia`)
+-   Spanish (`es`)
+-   Portuguese (`pt`)
+-   French (`fr`)
+-   Italian (`it`)
+-   Hebrew (`he`)
+-   Danish (`da`)
+
+</details>
 
 ## Development
 
-For start local development install dependencies
-```
-npm ci
-```
+To run this project locally, you'll need Node.js and npm installed.
 
-then run generate dictionary
-```
-npm run generate-dictionary
-```
+1.  **Install dependencies:**
+    This will install `wrangler` and other necessary packages.
+    ```bash
+    npm install
+    ```
 
-and now you can start dev server
-```
-npm run dev
-```
+2.  **Run the local development server:**
+    This command uses `wrangler` to start a local server.
+    ```bash
+    npm start
+    ```
+    Your API will be running at `http://localhost:8787`.
 
-## Testing
+## Deployment
 
-We have a [storybook](https://master--673f7516f3447911dae3b204.chromatic.com)
+This API is designed to be deployed on Cloudflare Workers.
 
-For some functions we have a unit tests
-```
-npm run test:unit
-```
-also we have playwright tests for main using flows, for run it install playwright
-```
-npx playwright install --with-deps
-```
-then you can start tests cli
-```
-npm run test:pw
-```
-or run it in ui mode
-```
-npx playwright test --ui 
-```
+1.  **Configure Wrangler:**
+    Make sure you have `wrangler` installed and logged in to your Cloudflare account. See the [official Cloudflare documentation](https://developers.cloudflare.com/workers/wrangler/configuration/) for details.
+
+2.  **Deploy:**
+    Run the deploy script from your `package.json`:
+    ```bash
+    npm run deploy
+    ```
+    This will deploy the worker to your Cloudflare account.
 
 ## Acknowledgements
 
-Using dictionary from: [http://steen.free.fr/interslavic/dynamic_dictionary.html](http://steen.free.fr/interslavic/dynamic_dictionary.html)  
+Using dictionary from: [http://steen.free.fr/interslavic/dynamic_dictionary.html](http://steen.free.fr/interslavic/dynamic_dictionary.html)
 

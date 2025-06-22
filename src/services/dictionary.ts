@@ -1,7 +1,5 @@
 import { ADD_LANGS, EN, ISV, ISV_SRC, LANGS } from 'consts'
 
-import { IAlphabets } from 'reducers'
-
 import {
     convertCases,
     deduplicate,
@@ -582,11 +580,6 @@ class DictionaryClass {
 
         const translateTime = Math.round(performance.now() - startTranslateTime)
 
-        if (!__PRODUCTION__ && showTime) {
-            // eslint-disable-next-line no-console
-            console.log('TRANSLATE', `${translateTime}ms`)
-        }
-
         return [rawResults, translateTime]
     }
 
@@ -595,7 +588,6 @@ class DictionaryClass {
         from: string,
         to: string,
         flavorisationType: string,
-        alphabets?: IAlphabets,
         caseQuestions?: boolean
     ): ITranslateResult[] {
         return results.map((item) => {
@@ -637,12 +629,12 @@ class DictionaryClass {
                 isv,
                 id,
             }
-            if (alphabets?.cyrillic) {
+            if (false) {
                 formattedItem.originalCyr = getCyrillic(isv, flavorisationType)
                 formattedItem.addCyr = getCyrillic(add, flavorisationType)
                 if(caseQuestions) formattedItem.caseInfoCyr = getCyrillic(caseInfo, flavorisationType)
             }
-            if (alphabets?.glagolitic) {
+            if (false) {
                 formattedItem.originalGla = getGlagolitic(isv, flavorisationType)
                 formattedItem.addGla = getGlagolitic(add, flavorisationType)
                 if(caseQuestions) formattedItem.caseInfoGla = getGlagolitic(caseInfo, flavorisationType)
@@ -705,7 +697,7 @@ class DictionaryClass {
         let lowerCaseText = text
             .toLowerCase()
             .replace(/,/g, '')
-            .replace(/[ʼ’]/g, "'")
+            .replace(/[ʼ'ʼ]/g, "'")
 
         if (lang !== ISV_SRC) {
             lowerCaseText = lowerCaseText.replace(/[\u0300-\u036f]/g, '')
@@ -768,15 +760,9 @@ class DictionaryClass {
         return text
     }
     private getRank(item: string[]): number {
-        const rank = Number.parseInt(this.getField(item, 'type'), 10)
-        // Assume normal rank if unclear (2)
-        if (Number.isNaN(rank)) return 2
-        // Upgrade neologisms (5) to normal rank (2)
-        if (rank === 5) return 2
-        // Do not distinguish between Old Church Slavonic (4) and regionally intelligible (3)
-        if (rank === 4) return 3
-
-        return rank
+        const type = Number(this.getField(item, 'type')) || 9
+        const genesis = this.getField(item, 'genesis')
+        return (type === 9 && genesis === 'art') ? 10 : type
     }
 }
 

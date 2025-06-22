@@ -1,4 +1,5 @@
 import { handleApiWordError } from './api-word-error'
+import { handleApiTranslate } from './api-translate'
 import { handleCompress } from './compress-data'
 import { handleOptions } from './handleOptions'
 import { responseError } from './responseError'
@@ -21,6 +22,10 @@ const routes: { match: (pathname: string) => boolean, handler: Handler }[] = [
         match: (pathname) => pathname.startsWith('/api/word-error'),
         handler: handleApiWordError,
     },
+    {
+        match: (pathname) => /^\/([a-z]{2,3})\//.test(pathname),
+        handler: handleApiTranslate,
+    }
 ]
 
 export default {
