@@ -4,19 +4,15 @@ An API for translating to and from interslavic.
 ## Deployment and Usage
 
 1.  **Install dependencies:**
-    This will install `wrangler` and other necessary packages.
     ```bash
     npm install
     ```
 
 2.  **Run the dev server:**
-    This command uses `wrangler` to start a local server.
     ```bash
     npm start
     ```
     If everything goes right, the API should be accessible via `http://localhost:8787`.
-
-Make a `GET` request, and it returns a JSON array of possible translations.
 
 ### Endpoints
 
@@ -75,14 +71,7 @@ Make a `GET` request, and it returns a JSON array of possible translations.
 
 </details>
 
-## Development
-
-To run this project locally, you'll need Node.js and npm installed.
-
-
-## Deployment
-
-This API is designed to be deployed on Cloudflare Workers.
+## Deployment to Cloudflare
 
 1.  **Configure Wrangler:**
     Make sure you have `wrangler` installed and logged in to your Cloudflare account. See the [official Cloudflare documentation](https://developers.cloudflare.com/workers/wrangler/configuration/) for details.
